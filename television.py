@@ -1,65 +1,67 @@
 class Television:
-    MIN_VOLUME = 0
-    MAX_VOLUME = 2
-    MIN_CHANNEL = 0
-    MAX_CHANNEL = 3
-    temp = 0
+    MIN_VOLUME: int = 0
+    MAX_VOLUME: int = 2
+    MIN_CHANNEL: int = 0
+    MAX_CHANNEL: int = 3
+    temp: int = 0
 
-    def __init__(self):
-        self._status = False
-        self._muted = False
-        self._volume = self.MIN_VOLUME
-        self._channel = self.MIN_CHANNEL
+    def __init__(self) -> None:
+        self._status: bool = False
+        self._muted: bool = False
+        self._volume: int = self.MIN_VOLUME
+        self._channel: int = self.MIN_CHANNEL
 
-    def power(self):
+    def power(self) -> None:
         self._status = not self._status
         if not self._status:
-            self._muted = False  # Reset mute status when TV is turned off
+            self._muted = False  
 
-    def mute(self):
+    def mute(self) -> None:
         if self._status:
-            self._muted = not self._muted
-            if self._muted:
-                self.temp = self._volume
-                self._volume = self.MIN_VOLUME
+            if not self._muted:
+                self.temp = self._volume  
+                self._muted = True
+                self._volume = self.MIN_VOLUME  
             else:
-                self._volume = self.temp
+                self._muted = False  
+                self._volume = self.temp  
 
-    def channel_up(self):
+    def channel_up(self) -> None:
         if self._status:
             if self._channel == self.MAX_CHANNEL:
-                self._channel = self.MIN_CHANNEL  # Wrap around to the minimum channel
+                self._channel = self.MIN_CHANNEL  
             else:
                 self._channel += 1
                 if self._muted:
-                    self._muted = False  # Unmute TV when channel changes
+                    self._muted = False  
 
-    def channel_down(self):
+    def channel_down(self) -> None:
         if self._status:
             if self._channel == self.MIN_CHANNEL:
-                self._channel = self.MAX_CHANNEL  # Wrap around to the maximum channel
+                self._channel = self.MAX_CHANNEL  
             else:
                 self._channel -= 1
                 if self._muted:
-                    self._muted = False  # Unmute TV when channel changes
+                    self._muted = False  
 
-    def volume_up(self):
+    def volume_up(self) -> None:
         if self._status:
             if not self._muted:
                 if self._volume < self.MAX_VOLUME:
                     self._volume += 1
             else:
-                self._muted = False  # Unmute TV when volume changes
+                self._muted = False  
                 self._volume = self.temp + 1
 
-    def volume_down(self):
+    def volume_down(self) -> None:
         if self._status:
             if not self._muted:
                 if self._volume > self.MIN_VOLUME:
                     self._volume -= 1
             else:
-                self._muted = False  # Unmute TV when volume changes
-                self._volume = self.temp - 1 # Set volume to minimum
+                self._muted = False 
+                self._volume = self.temp - 1  
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Power = {self._status}, Channel = {self._channel}, Volume = {self._volume}"
+
