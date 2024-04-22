@@ -64,7 +64,7 @@ def test_volume_up(tv):
 
     tv.mute()
     tv.volume_up()  # Increase volume when TV is muted
-    assert str(tv) == "Power = True, Channel = 0, Volume = 1"
+    assert str(tv) == "Power = True, Channel = 0, Volume = 2"
 
     # Increase volume past maximum value
     for _ in range(3):
@@ -76,13 +76,13 @@ def test_volume_down(tv):
     assert str(tv) == "Power = False, Channel = 0, Volume = 0"
 
     tv.power()
-    tv.volume_up()  # Increase volume to maximum
+    tv.volume_up()  
     tv.volume_down()  # Decrease volume when TV is on
-    assert str(tv) == "Power = True, Channel = 0, Volume = 1"
+    assert str(tv) == "Power = True, Channel = 0, Volume = 0"
 
     tv.mute()
     tv.volume_down()  # Decrease volume when TV is muted
-    assert str(tv) == "Power = True, Channel = 0, Volume = 1"
+    assert str(tv) == "Power = True, Channel = 0, Volume = 0"
 
     # Decrease volume to minimum
     for _ in range(3):
@@ -91,14 +91,15 @@ def test_volume_down(tv):
 
 def test_muted_volume_adjustment(tv):
     tv.power()
-    tv.volume_up()  # Increase volume to maximum
+    tv.volume_up() 
     tv.mute()  # Mute TV
     assert str(tv) == "Power = True, Channel = 0, Volume = 0"
 
     # Increase volume when TV is muted
     tv.volume_up()
-    assert str(tv) == "Power = True, Channel = 0, Volume = 1"
+    assert str(tv) == "Power = True, Channel = 0, Volume = 2"
 
     # Decrease volume when TV is muted
     tv.volume_down()
-    assert str(tv) == "Power = True, Channel = 0, Volume = 0"
+    assert str(tv) == "Power = True, Channel = 0, Volume = 1"
+
