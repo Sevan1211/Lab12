@@ -58,6 +58,8 @@ class Television:
             else:
                 self._muted = False
                 self._volume = self.temp + 1
+                if self._volume > self.MAX_VOLUME:  # Ensure volume doesn't exceed maximum
+                    self._volume = self.MAX_VOLUME
 
     def volume_down(self) -> None:
         """Decrease the volume."""
@@ -68,8 +70,12 @@ class Television:
             else:
                 self._muted = False
                 self._volume = self.temp - 1
+                if self._volume < self.MIN_VOLUME:  # Ensure volume doesn't go below minimum
+                    self._volume = self.MIN_VOLUME
+
 
     def __str__(self) -> str:
         """Return the string representation of the television."""
         return f"Power = {self._status}, Channel = {self._channel}, Volume = {self._volume}"
+
 
